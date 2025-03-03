@@ -63,13 +63,7 @@ const styles = StyleSheet.create({
 
         alignItems: "left",
     },
-    priceTag: {
-        position: "absolute",
-        right: 20,
-        top: 180,
-        width: 80,
-        height: 80,
-    },
+
     nameSection: {
         marginTop: 0,
         paddingHorizontal: 10,
