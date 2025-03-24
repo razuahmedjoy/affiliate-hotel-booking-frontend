@@ -1,13 +1,14 @@
 import { Document, Page, Text, View, StyleSheet, PDFViewer, Image, Font } from "@react-pdf/renderer"
 import PoppinRegular from "../../assets/fonts/Poppins-Regular.ttf"
 import PoppinBold from "../../assets/fonts/Poppins-Bold.ttf"
+import AffiliateCardBg from "@/assets/imgs/affiliate_card.png";
 // Define page dimensions for 4x6 inches (72 DPI)
 const PAGE_WIDTH = 4 * 72 // 288 points
 const PAGE_HEIGHT = 6 * 72 // 432 points
 
 Font.register({
     family: "Poppins",
-    fonts: [{ src: PoppinRegular },{
+    fonts: [{ src: PoppinRegular }, {
         src: PoppinBold,
         fontWeight: "bold",
     }],
@@ -53,21 +54,22 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     qrSection: {
-        backgroundColor: "white",
-        padding: 2,
-        width: 140,
+   
+        top: 95,
+        left: 10,
+        width: 180,
+        height: "auto",
+        borderRadius: 50,
 
-        height: 160,
         // marginHorizontal: 20,
-        borderRadius: 10,
-
-        alignItems: "left",
+      
     },
 
     nameSection: {
-        marginTop: 0,
+        marginTop: 100,
         paddingHorizontal: 10,
-        fontWeight: "medium",
+        fontWeight: "bold",
+        fontSize: 32,
     },
     name: {
         fontSize: 18,
@@ -180,6 +182,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
 
     },
+    affiliateCardBg:{
+        position: "absolute",
+        right: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: -1,
+    }
 
 })
 
@@ -188,18 +201,18 @@ export const AffiliateQRPDF = ({ user }) => (
     <Document>
         <Page size={[PAGE_WIDTH, PAGE_HEIGHT]} style={styles.page}>
             {/* Header Section with Logo */}
-            <View style={styles.headerSection}>
+            {/* <View style={styles.headerSection}>
                 <Text style={styles.logoText}>Yolast</Text>
                 <Text style={styles.tagline}>Last Minute Travel Deals & Bookings</Text>
-            </View>
+            </View> */}
 
             {/* QR Code Section */}
-            <View style={styles.flex}>
+    
 
                 <View style={styles.qrSection}>
-                    <Image src={user?.qrCodeUrl || "/placeholder.svg"} style={{ width: 150, height: 150 }} />
+                    <Image src={user?.qrCodeUrl || "/placeholder.svg"} />
                 </View>
-                <View style={styles.moneySection}>
+                {/* <View style={styles.moneySection}>
                     <View style={styles.orangecircle}>
 
                     </View>
@@ -215,8 +228,11 @@ export const AffiliateQRPDF = ({ user }) => (
                     </View>
 
 
-                </View>
+                </View> */}
 
+         
+            <View style={styles.affiliateCardBg}>
+                <Image src={AffiliateCardBg || "/placeholder.svg"} style={{ width: "100%", height: "100%" }} />
             </View>
 
             {/* Price Tag */}
@@ -227,20 +243,20 @@ export const AffiliateQRPDF = ({ user }) => (
             </View>
 
             {/* Services Text */}
-            <Text style={styles.servicesText}>
+            {/* <Text style={styles.servicesText}>
                 Homestay, Hotels, Travel Guide, Tour packages, Medical Tourism and much more!
-            </Text>
+            </Text> */}
 
             {/* Payment Section */}
-            <View style={styles.paymentSection}>
+            {/* <View style={styles.paymentSection}>
                 <Text style={styles.securePaymentText}>SECURE PAYMENT BY</Text>
                 <Image src="/placeholder.svg?height=30&width=200" style={styles.paymentLogos} />
-            </View>
+            </View> */}
 
             {/* Footer */}
-            <View style={styles.footer}>
+            {/* <View style={styles.footer}>
                 <Text style={styles.footerText}>WE MAKE IT FAST! OR YOUR MONEY BACK!</Text>
-            </View>
+            </View> */}
         </Page>
     </Document>
 )

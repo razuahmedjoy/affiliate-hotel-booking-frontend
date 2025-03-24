@@ -15,11 +15,13 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar"
 import avatarImage from "@/assets/imgs/avatar.png";
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 import useAuthStore from "@/store/authStore";
 
 export default function DashboardLayout() {
+    const { user } = useAuthStore()
     const { logout } = useAuthStore()
+
     return (
         <SidebarProvider>
             <AppSidebar />
@@ -52,15 +54,17 @@ export default function DashboardLayout() {
                                         alt=""
                                         className="w-8 h-8 rounded-full"
                                     />
-                                    <span className="text-sm font-semibold">John Doe</span>
+                                    <span className="text-sm font-semibold">{user?.name || ``}</span>
                                 </div>
-                            
+
 
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem className="cursor-pointer hover:bg-accent">Profile</DropdownMenuItem>
+                                <DropdownMenuItem className="cursor-pointer hover:bg-accent">
+                                    <Link to="/affiliate/profile">Profile</Link>
+                                </DropdownMenuItem>
                                 <DropdownMenuItem onClick={() => logout()} className="cursor-pointer hover:bg-accent">Logout</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>

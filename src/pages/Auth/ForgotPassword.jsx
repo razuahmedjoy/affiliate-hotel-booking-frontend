@@ -10,8 +10,9 @@ import { Link, useNavigate } from "react-router"  // Make sure you have react-ro
 import useLoaderStore from "@/store/loaderStore"
 import useAuthStore from "@/store/authStore"
 import { useLoginUser } from "@/services/authService"
-
-const AffiliateLogin = () => {
+import ForgotPasswordLottie from "@/assets/lottiefiles/lottie.json"
+import LottieAnimation from "@/components/ui/LottieAnimation"
+const ForgotPasswordPage = () => {
     const { isLoading } = useLoaderStore();
     const { login, isAuthenticated, role } = useAuthStore()
     const { mutateAsync: loginUser } = useLoginUser()
@@ -51,15 +52,12 @@ const AffiliateLogin = () => {
 
     return (
         <div className="w-full h-screen flex items-center justify-center">
-            <div className="max-w-7xl w-full p-8 md:p-12 grid md:grid-cols-2 gap-8">
+            <div className="max-w-7xl w-full p-8 md:p-12 grid md:grid-cols-2 gap-8 place-items-center">
 
                 {/* Left Column - Image */}
                 <div className="hidden md:block">
-                    <img
-                        src={AffiliateRegisterImage} // Replace with your image URL
-                        alt="Affiliate Registration"
-                        className="w-full h-full object-contain rounded-md"
-                    />
+                    <LottieAnimation path={ForgotPasswordLottie} loop autoplay />
+     
                 </div>
 
                 {/* Right Column - Registration Form */}
@@ -67,7 +65,7 @@ const AffiliateLogin = () => {
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full max-w-md bg-white p-6 rounded-lg shadow-md">
 
-                            <h2 className="text-center text-3xl font-semibold mb-4">Affiliate Login</h2>
+                            <h2 className="text-center text-3xl font-semibold mb-4">Reset Your Password</h2>
 
 
 
@@ -86,28 +84,7 @@ const AffiliateLogin = () => {
                                 )}
                             />
 
-                            {/* Password Field */}
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Password</FormLabel>
-                                        <FormControl>
-                                            <Input type="password" className="bg-white shadow-none" {...field} />
-                                        </FormControl>
-                                        <div className="text-right">
-
-                                            <Link to="/auth/forgot-password" className="text-xs text-blue-600 hover:text-blue-800">
-                                                Forgot Password?
-                                            </Link>
-                                        </div>
-
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-
+                      
 
 
 
@@ -117,8 +94,8 @@ const AffiliateLogin = () => {
                             </Button>
                             {/* Footer Links */}
                             <div className="text-center">
-                                <Link to="/auth/affiliate/register" className="text-blue-600 hover:text-blue-800 text-xs">
-                                    Don't have an account? Register
+                                <Link to="/auth/affiliate/login" className="text-blue-600 hover:text-blue-800 text-xs">
+                                    Already have an account? Login
                                 </Link>
 
                             </div>
@@ -132,4 +109,4 @@ const AffiliateLogin = () => {
     );
 };
 
-export default AffiliateLogin;
+export default ForgotPasswordPage;

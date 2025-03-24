@@ -3,6 +3,7 @@ import {
   AudioWaveform,
   BookOpen,
   Bot,
+  CoinsIcon,
   Command,
   Frame,
   GalleryVerticalEnd,
@@ -62,6 +63,13 @@ const data = {
       title: "Affiliates",
       url: "affiliates",
       icon: UserPlus2,
+
+
+    },
+    {
+      title: "Earnings",
+      url: "earning-reports",
+      icon: CoinsIcon,
 
 
     },

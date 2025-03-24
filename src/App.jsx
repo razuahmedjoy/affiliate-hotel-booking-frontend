@@ -13,6 +13,9 @@ import CustomerPreBooking from "./pages/CustomerPreBooking/CustomerPreBooking"
 import PrebookingPaymentSuccess from "./pages/CustomerPreBooking/PrebookingPaymentSuccess"
 import PrebookingPaymentDeclined from "./pages/CustomerPreBooking/PrebookingPaymentDeclined"
 import DashboardQrPreview from "./pages/Affiliate/AffiliateDashboard/DashboardQrPreview"
+import ForgotPasswordPage from "./pages/Auth/ForgotPassword"
+import UserProfilePage from "./pages/User/UserProfilePage"
+import Earnings from "./pages/Affiliate/AffiliateDashboard/Earnings"
 
 
 const queryClient = new QueryClient()
@@ -36,7 +39,7 @@ function App() {
           <Route path="/auth" >
             <Route path="affiliate/register" element={<AffiliateRegister />} />
             <Route path="affiliate/login" element={<AffiliateLogin />} />
-
+            <Route path="forgot-password" element={<ForgotPasswordPage />} />
           </Route>
 
           <Route path="/affiliate" element={
@@ -45,6 +48,8 @@ function App() {
             </RoleBasedPrivateRoute>
           }>
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="profile" element={<UserProfilePage />} />
+            <Route path="earning-reports" element={<Earnings />} />
             <Route path="dashboard/qr-preview" element={<DashboardQrPreview />} />
             <Route path="affiliates" element={<h1>Affiliate Links</h1>} />
             <Route path="stats" element={<h1>Affiliate Stats</h1>} />

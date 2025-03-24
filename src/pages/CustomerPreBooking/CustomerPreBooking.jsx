@@ -23,14 +23,8 @@ const CustomerPreBooking = () => {
     const form = useForm({
         defaultValues: {
             name: "",
-            email: "",
             phone: "",
             waitingTime: "10",
-            city: "",
-            country: "",
-            state: "",
-            street: "",
-            zipCode: "",
             affiliateId: affiliateId
         },
     })
@@ -91,24 +85,7 @@ const CustomerPreBooking = () => {
                         />
 
                         {/* Email Field */}
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            type="email"
-                                            className="bg-white shadow-none"
-                                            placeholder="john@example.com" {...field}
-                                            required
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+              
 
                         {/* Phone Field */}
                         <FormField
@@ -133,71 +110,7 @@ const CustomerPreBooking = () => {
                         {/* Address Field */}
                         {/* render all the address field in different input fields and in 2 columns */}
                         <div className="grid grid-cols-2 gap-4">
-                            <FormField
-                                control={form.control}
-                                name="street"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Street</FormLabel>
-                                        <FormControl>
-                                            <Input className="bg-white shadow-none" placeholder="101 MG Road" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="city"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>City</FormLabel>
-                                        <FormControl>
-                                            <Input className="bg-white shadow-none" placeholder="Mumbai" {...field} required />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="state"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>State</FormLabel>
-                                        <FormControl>
-                                            <Input className="bg-white shadow-none" placeholder="Maharashtra" {...field} required />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="country"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Country</FormLabel>
-                                        <FormControl>
-                                            <Input className="bg-white shadow-none" placeholder="India" {...field} required />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="zipCode"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Zip Code</FormLabel>
-                                        <FormControl>
-                                            <Input className="bg-white shadow-none" placeholder="400001" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                           
 
                             {/* add a dropdown select field for waitingTIme */}
                             <FormField
@@ -216,6 +129,30 @@ const CustomerPreBooking = () => {
                                                 <SelectItem value="10">10 Mins</SelectItem>
                                                 <SelectItem value="60">60 Mins</SelectItem>
                                                 <SelectItem value="1440">24 Hours</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="serviceType"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Service Type</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select a Service Type" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                <SelectItem value="Homestay">Homestay</SelectItem>
+                                                <SelectItem value="Hotel">Hotel</SelectItem>
+                                                <SelectItem value="Tour Guides">Tour Guides</SelectItem>
+                                                <SelectItem value="Other">Other</SelectItem>
                                             </SelectContent>
                                         </Select>
 
