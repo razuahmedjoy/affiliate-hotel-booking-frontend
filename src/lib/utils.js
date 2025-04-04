@@ -1,19 +1,20 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge"
+import { ROLES } from "./ROLES";
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
 export const navigateBasedOnRole = (role) => {
-  switch (role) {
-    case 'admin':
-      return '/admin/dashboard';
-    case 'customer':
-      return '/customer/dashboard';
-    case 'affiliate':
-      return '/affiliate/dashboard';
-    default:
-      return '/';
+  if (role.includes(ROLES.AFFILIATE)) {
+    return '/affiliate/dashboard';
   }
+  if (role.includes(ROLES.ADMIN)) {
+    return '/admin/dashboard';
+  }
+  if (role.includes(ROLES.CUSTOMER)) {
+    return '/customer/dashboard';
+  }
+  return '/';
 };

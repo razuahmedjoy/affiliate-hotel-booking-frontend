@@ -54,7 +54,9 @@ export default function DashboardLayout() {
                                         alt=""
                                         className="w-8 h-8 rounded-full"
                                     />
-                                    <span className="text-sm font-semibold">{user?.name || ``}</span>
+                                    <span className="text-sm font-semibold">
+                                        {user?.firstName} {user?.lastName}
+                                    </span>
                                 </div>
 
 

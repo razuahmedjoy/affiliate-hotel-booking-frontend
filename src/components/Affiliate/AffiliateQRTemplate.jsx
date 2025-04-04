@@ -1,7 +1,8 @@
-import { Document, Page, Text, View, StyleSheet, PDFViewer, Image, Font } from "@react-pdf/renderer"
+import { Document, Page, Text, View, StyleSheet, PDFViewer, Image, Font, pdf } from "@react-pdf/renderer"
 import PoppinRegular from "../../assets/fonts/Poppins-Regular.ttf"
 import PoppinBold from "../../assets/fonts/Poppins-Bold.ttf"
 import AffiliateCardBg from "@/assets/imgs/affiliate_card.png";
+import { useEffect, useState } from "react";
 // Define page dimensions for 4x6 inches (72 DPI)
 const PAGE_WIDTH = 4 * 72 // 288 points
 const PAGE_HEIGHT = 6 * 72 // 432 points
@@ -25,7 +26,10 @@ const styles = StyleSheet.create({
     },
     viewer: {
         width: "100%",
-        height: "100vh",
+        minHeight: "80vh",
+        border: "none",       // remove border
+        boxShadow: "0 2px 8px rgba(0,0,0,0.1)", // optional: soft card shadow
+        overflow: "hidden",   // hide scrollbars if content overflows
     },
     flex: {
         display: "flex",
@@ -54,7 +58,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     qrSection: {
-   
+
         top: 95,
         left: 10,
         width: 180,
@@ -62,7 +66,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
 
         // marginHorizontal: 20,
-      
+
     },
 
     nameSection: {
@@ -182,7 +186,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
 
     },
-    affiliateCardBg:{
+    affiliateCardBg: {
         position: "absolute",
         right: 0,
         top: 0,
@@ -207,12 +211,12 @@ export const AffiliateQRPDF = ({ user }) => (
             </View> */}
 
             {/* QR Code Section */}
-    
 
-                <View style={styles.qrSection}>
-                    <Image src={user?.qrCodeUrl || "/placeholder.svg"} />
-                </View>
-                {/* <View style={styles.moneySection}>
+
+            <View style={styles.qrSection}>
+                <Image src={user?.affiliate?.qrCodeUrl || "/placeholder.svg"} />
+            </View>
+            {/* <View style={styles.moneySection}>
                     <View style={styles.orangecircle}>
 
                     </View>
@@ -230,7 +234,7 @@ export const AffiliateQRPDF = ({ user }) => (
 
                 </View> */}
 
-         
+
             <View style={styles.affiliateCardBg}>
                 <Image src={AffiliateCardBg || "/placeholder.svg"} style={{ width: "100%", height: "100%" }} />
             </View>
@@ -239,7 +243,7 @@ export const AffiliateQRPDF = ({ user }) => (
 
             {/* Name Section */}
             <View style={styles.nameSection}>
-                <Text style={styles.name}>{user?.name}</Text>
+                <Text style={styles.name}>{user?.firstName} {user?.lastName}</Text>
             </View>
 
             {/* Services Text */}
@@ -264,10 +268,39 @@ export const AffiliateQRPDF = ({ user }) => (
 // Create PDF Viewer Component with QR Code URL prop
 export default function YolastPDFTemplate({ user }) {
     return (
-        <div className="w-full h-screen">
-            <PDFViewer style={styles.viewer}>
+        <div className="w-full aspect-auto">
+            <PDFViewer style={styles.viewer} className="aspect-auto">
                 <AffiliateQRPDF user={user} />
             </PDFViewer>
+        </div>
+    )
+}
+
+export const AffiliateCardAsImage = ({ user }) => {
+
+    const [pdfUrl, setPdfUrl] = useState(null);
+    useEffect(() => {
+        const generatePdf = async () => {
+            const blob = await pdf(<AffiliateQRPDF user={user} />).toBlob();
+            const url = URL.createObjectURL(blob);
+            setPdfUrl(url);
+        };
+
+        generatePdf();
+
+        return () => {
+            if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+        };
+    }, [user]);
+    return (
+        <div>
+            {pdfUrl && (
+                <img
+                    src={pdfUrl}
+                    alt="Affiliate QR"
+                    style={{ width: '300px', height: 'auto', borderRadius: '8px' }}
+                />
+            )}
         </div>
     )
 }

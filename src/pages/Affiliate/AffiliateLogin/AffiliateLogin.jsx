@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router"  // Make sure you have react-ro
 import useLoaderStore from "@/store/loaderStore"
 import useAuthStore from "@/store/authStore"
 import { useLoginUser } from "@/services/authService"
+import toast from "react-hot-toast"
 
 const AffiliateLogin = () => {
     const { isLoading } = useLoaderStore();
@@ -32,18 +33,19 @@ const AffiliateLogin = () => {
         try {
             const response = await loginUser(data)  // API call using React Query
             console.log(response?.data?.user)
-            login(response?.data?.user, response?.data?.token, "affiliate")  // Store user, token, and role in Zustand
+            login(response?.data?.user, response?.data?.token, response?.data?.user?.role)  // Store user, token, and role in Zustand
 
 
             // Redirect to the appropriate dashboard based on the role
         } catch (error) {
             console.error('Login failed:', error)
+            toast.error('Login failed. Please check your credentials.')
         }
     }
 
     useEffect(() => {
 
-        if (isAuthenticated && role === 'affiliate') {
+        if (isAuthenticated && role.includes('AFFILIATE')) {
             navigate('/affiliate/dashboard')
         }
 

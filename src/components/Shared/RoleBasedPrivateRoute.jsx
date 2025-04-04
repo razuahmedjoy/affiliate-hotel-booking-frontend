@@ -9,7 +9,7 @@ const RoleBasedPrivateRoute = ({ children, requiredRole }) => {
         return <Navigate to="/auth/affiliate/login" />
     }
 
-    if (requiredRole && requiredRole !== role) {
+    if (requiredRole && role && !role.includes(requiredRole)) {
         return <Navigate to="/" /> // Redirect to home page or some other page if the user does not have the required role
     }
 

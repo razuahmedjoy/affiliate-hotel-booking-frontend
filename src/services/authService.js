@@ -3,7 +3,7 @@ import axiosInstance from './axiosInstance'
 import useLoaderStore from '@/store/loaderStore'
 
 // Register a new user
-export const registerUser = async (userData) => {
+export const registerAffiliate = async (userData) => {
     const response = await axiosInstance.post('/affiliates/register', userData)
     return response.data
 }
@@ -16,10 +16,10 @@ export const loginUser = async (loginData) => {
 }
 
 // Register hook using React Query's `useMutation`
-export const useRegisterUser = () => {
+export const useRegisterAffiliate = () => {
 
     const { setLoading } = useLoaderStore()
-    return useMutation(registerUser, {
+    return useMutation(registerAffiliate, {
         onMutate: () => {
             setLoading(true)  // Start loading
         },

@@ -83,17 +83,33 @@ const TransactionsTable = () => {
 
     return (
 
-        <DataTable
-            columns={columns}
-            data={data}
-            pagination={{
-                ...pagination,
-                pageCount: Math.ceil(total / pagination.pageSize),
-                total,
-            }}
-            onPaginationChange={onPaginationChange}
-            isLoading={isLoading}
-        />
+        <>
+
+            <h2 className="text-lg font-semibold mb-4">Transactions</h2>
+            <div className="flex flex-wrap justify-between w-full mb-2">
+                <p className="text-sm text-gray-500 mb-4">View your transaction history.</p>
+                {/* add date range filter */}
+                <div className="flex items-center gap-2">
+                    <input type="date" id="startDate" className="border rounded px-2 py-1" />
+                    <label htmlFor="endDate" className="text-sm text-gray-500">To</label>
+                    <input type="date" id="endDate" className="border rounded px-2 py-1" />
+                    <button className="bg-blue-600 b text-white px-4 py-1 rounded">Filter</button>
+                </div>
+
+            </div>
+
+            <DataTable
+                columns={columns}
+                data={data}
+                pagination={{
+                    ...pagination,
+                    pageCount: Math.ceil(total / pagination.pageSize),
+                    total,
+                }}
+                onPaginationChange={onPaginationChange}
+                isLoading={isLoading}
+            />
+        </>
 
     )
 }

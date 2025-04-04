@@ -59,15 +59,9 @@ const data = {
       isActive: true,
 
     },
-    {
-      title: "Affiliates",
-      url: "affiliates",
-      icon: UserPlus2,
 
-
-    },
     {
-      title: "Earnings",
+      title: "Earnings Reports",
       url: "earning-reports",
       icon: CoinsIcon,
 

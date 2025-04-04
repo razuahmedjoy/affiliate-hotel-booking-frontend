@@ -16,6 +16,7 @@ import DashboardQrPreview from "./pages/Affiliate/AffiliateDashboard/DashboardQr
 import ForgotPasswordPage from "./pages/Auth/ForgotPassword"
 import UserProfilePage from "./pages/User/UserProfilePage"
 import Earnings from "./pages/Affiliate/AffiliateDashboard/Earnings"
+import { ROLES } from "./lib/ROLES"
 
 
 const queryClient = new QueryClient()
@@ -43,7 +44,7 @@ function App() {
           </Route>
 
           <Route path="/affiliate" element={
-            <RoleBasedPrivateRoute requiredRole="affiliate">
+            <RoleBasedPrivateRoute requiredRole={ROLES.AFFILIATE}>
               <DashboardLayout />
             </RoleBasedPrivateRoute>
           }>
@@ -62,7 +63,7 @@ function App() {
           <Route path="/prebooking/payment/fail" element={<PrebookingPaymentDeclined />} />
 
           <Route path="/customer" element={
-            <RoleBasedPrivateRoute requiredRole="customer">
+            <RoleBasedPrivateRoute requiredRole={ROLES.CUSTOMER}>
               <DashboardLayout />
             </RoleBasedPrivateRoute>
           }>
