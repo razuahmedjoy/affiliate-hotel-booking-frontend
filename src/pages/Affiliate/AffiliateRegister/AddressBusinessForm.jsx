@@ -5,7 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
+import countries from "@/data/countries.json"; // Assuming you have a JSON file with country data
+import { useEffect, useState } from "react";
+import axios from "axios";
+import useLoaderStore from "@/store/loaderStore";
 // Schema for address and business information validation
 const AddressBusinessSchema = z.object({
     street: z.string().min(3, "Street address is required"),
@@ -21,13 +24,15 @@ const AddressBusinessSchema = z.object({
 });
 
 const AddressBusinessForm = ({ initialData, onNext, onPrevious, isLoading }) => {
+    const { setLoading } = useLoaderStore();
+    const [states, setStates] = useState([])
     const form = useForm({
         resolver: zodResolver(AddressBusinessSchema),
         defaultValues: initialData || {
             street: "",
             city: "",
             state: "",
-            country: "",
+            country: "India",
             zipCode: "",
             affiliateType: "",
             businessName: "",
@@ -36,6 +41,8 @@ const AddressBusinessForm = ({ initialData, onNext, onPrevious, isLoading }) => 
             promotionMethod: []
         }
     });
+
+    // get countries from a api and create a json file and save it
 
     const affiliateType = form.watch("affiliateType");
 
@@ -48,6 +55,35 @@ const AddressBusinessForm = ({ initialData, onNext, onPrevious, isLoading }) => 
         { id: "online_link", label: "Online Link" }
     ];
 
+    const onCountryChange = async (country) => {
+        // Fetch states and cities based on the selected country
+        try {
+            setLoading(true);
+
+
+            const response = await axios.post(`https://countriesnow.space/api/v0.1/countries/states`, {
+                country: country
+            });
+            const states = response.data.data.states;
+            setStates(states);
+        }
+        catch (error) {
+            console.error("Error fetching states:", error);
+        }
+        finally {
+            setLoading(false);
+        }
+
+    }
+
+    // check if country is selected or changed fetch states and cities from api
+    useEffect(() => {
+        if (form.getValues("country")) {
+            onCountryChange(form.getValues("country"));
+
+        }
+    }, []);
+    // console.log(form.getValues("country"));
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3">
@@ -66,6 +102,68 @@ const AddressBusinessForm = ({ initialData, onNext, onPrevious, isLoading }) => 
                 />
 
                 <div className="grid grid-cols-2 gap-3">
+                    {/* render a select field for country */}
+                    <FormField
+                        control={form.control}
+                        name="country"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Country</FormLabel>
+                                <Select onValueChange={
+                                    (value) => {
+                                        field.onChange(value);
+                                        onCountryChange(value);
+                                    }
+                                } defaultValue={field.value} >
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select Country" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {countries?.map((country) => (
+                                            <SelectItem key={country.country} value={country.country}>
+                                                {country.country}
+                                            </SelectItem>
+                                        ))}
+                                        {/* Add more countries as needed */}
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+
+                    <FormField
+                        control={form.control}
+                        name="state"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>State / Province</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value} >
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select State" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {states?.map((state) => (
+                                            <SelectItem key={state?.state_code} value={state.name}>
+                                                {state.name}
+                                            </SelectItem>
+                                        ))}
+                                        {/* Add more countries as needed */}
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+
                     <FormField
                         control={form.control}
                         name="city"
@@ -79,37 +177,6 @@ const AddressBusinessForm = ({ initialData, onNext, onPrevious, isLoading }) => 
                             </FormItem>
                         )}
                     />
-
-                    <FormField
-                        control={form.control}
-                        name="state"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>State / Province</FormLabel>
-                                <FormControl>
-                                    <Input className="bg-white shadow-none" placeholder="Maharashtra" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                    <FormField
-                        control={form.control}
-                        name="country"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Country</FormLabel>
-                                <FormControl>
-                                    <Input className="bg-white shadow-none" placeholder="India" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
                     <FormField
                         control={form.control}
                         name="zipCode"

@@ -8,7 +8,7 @@
 
 
 :root {
-  --radius: rem;
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -148,6 +148,7 @@
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 } */
+ 
 
 @theme inline {
   --color-background: var(--background);

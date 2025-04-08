@@ -42,7 +42,7 @@ const AffiliateRegister = () => {
         street: "",
         city: "",
         state: "",
-        country: "",
+        country: "India",
         zipCode: "",
         affiliateType: "Individual",
         businessName: "",
