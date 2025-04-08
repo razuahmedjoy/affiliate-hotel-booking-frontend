@@ -35,10 +35,10 @@ const Dashboard = () => {
     }
     console.log(user);
     return (
-        <div className="p-8 space-y-8 ">
+        <div className="container mx-auto p-4">
             <h2 className="text-3xl font-semibold text-center">Agent Dashboard</h2>
 
-            <div className="grid grid-cols md:grid-cols-2 space-x-6">
+            <div className="grid grid-cols md:grid-cols-2 gap-5">
 
                 <div>
                     <div className="grid grid-cols-1 gap-8">
@@ -64,11 +64,31 @@ const Dashboard = () => {
                                 <li>Conversion Rate: {dashboardData.stats.conversionRate}</li>
                             </ul>
                         </div>
+                        <div className="w-full p-6 rounded-lg shadow-md flex flex-col flex-wrap items-center">
+                            <h3 className="text-xl font-medium mb-4">Agent Referral Link</h3>
+                            <div className="">
+                                <input
+                                    type="text"
+                                    ref={inputRef}
+                                    value={`${import.meta.env.VITE_FRONTEND_URL}/customer/${user?.affiliate?.uniqueCode}`}
+                                    readOnly
+                                    className="w-fit p-2 border border-gray-300 rounded-md"
+                                />
+
+                            </div>
+                            <button
+                                onClick={handleCopyLink}
+                                className="bg-teal-600 text-white p-2 rounded-md cursor-pointer mt-2"
+                            >
+                                Copy Link
+                            </button>
+                            {copySuccess && <p className="text-green-600 mt-2">{copySuccess}</p>}
+                        </div>
                     </div>
                 </div>
 
                 {/* QR Code Section */}
-                <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
+                <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center mt-5 md:mt-0">
                     <h3 className="text-md font-medium mb-4">Agent QR Code</h3>
                     {/* <img src={user?.affiliate?.qrCodeUrl} alt="QR Code" className="w-48 h-48 mb-4" /> */}
                     <YolastPDFTemplate user={user} />
@@ -91,25 +111,7 @@ const Dashboard = () => {
             </div>
 
             {/* Referral Payment Link */}
-            <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
-                <h3 className="text-xl font-medium mb-4">Agent Referral Link</h3>
-                <div className="flex items-center space-x-4">
-                    <input
-                        type="text"
-                        ref={inputRef}
-                        value={`${import.meta.env.VITE_FRONTEND_URL}/customer/${user?.affiliate?.uniqueCode}`}
-                        readOnly
-                        className="w-96 p-2 border border-gray-300 rounded-md"
-                    />
-                    <button
-                        onClick={handleCopyLink}
-                        className="bg-teal-600 text-white p-2 rounded-md cursor-pointer"
-                    >
-                        Copy Link
-                    </button>
-                </div>
-                {copySuccess && <p className="text-green-600 mt-2">{copySuccess}</p>}
-            </div>
+
         </div>
     );
 };

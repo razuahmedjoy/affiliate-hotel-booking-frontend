@@ -268,8 +268,8 @@ export const AffiliateQRPDF = ({ user }) => (
 // Create PDF Viewer Component with QR Code URL prop
 export default function YolastPDFTemplate({ user }) {
     return (
-        <div className="w-full aspect-auto">
-            <PDFViewer style={styles.viewer} className="aspect-auto">
+        <div className="w-full">
+            <PDFViewer style={styles.viewer}>
                 <AffiliateQRPDF user={user} />
             </PDFViewer>
         </div>

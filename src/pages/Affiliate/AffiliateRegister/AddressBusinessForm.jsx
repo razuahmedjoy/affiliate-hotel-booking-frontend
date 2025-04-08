@@ -24,12 +24,12 @@ const AddressBusinessForm = ({ initialData, onNext, onPrevious, isLoading }) => 
     const form = useForm({
         resolver: zodResolver(AddressBusinessSchema),
         defaultValues: initialData || {
-            street: "101 MG Road",
-            city: "Mumbai",
-            state: "Maharashtra",
-            country: "India",
-            zipCode: "400001",
-            affiliateType: "Individual",
+            street: "",
+            city: "",
+            state: "",
+            country: "",
+            zipCode: "",
+            affiliateType: "",
             businessName: "",
             socialMediaLinks: "",
             gstNumber: "",
@@ -85,7 +85,7 @@ const AddressBusinessForm = ({ initialData, onNext, onPrevious, isLoading }) => 
                         name="state"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>State</FormLabel>
+                                <FormLabel>State / Province</FormLabel>
                                 <FormControl>
                                     <Input className="bg-white shadow-none" placeholder="Maharashtra" {...field} />
                                 </FormControl>

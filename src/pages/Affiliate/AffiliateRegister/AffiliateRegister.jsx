@@ -39,11 +39,11 @@ const AffiliateRegister = () => {
         password: "",
 
         // Address & Business
-        street: "101 MG Road",
-        city: "Mumbai",
-        state: "Maharashtra",
-        country: "India",
-        zipCode: "400001",
+        street: "",
+        city: "",
+        state: "",
+        country: "",
+        zipCode: "",
         affiliateType: "Individual",
         businessName: "",
         socialMediaLinks: "",
@@ -148,7 +148,7 @@ const AffiliateRegister = () => {
 
                 {/* Right Column - Registration Form with Stepper */}
                 <div className="w-full h-full flex flex-col items-center justify-center bg-blue-50 p-4 text-sm md:text-base md:p-0">
-                    <div className="w-full h-full mx-4 md:border-s-1 md:border-gray-400 p-5 bg-white">
+                    <div className="w-full h-full mx-4  p-5 bg-white">
                         <h2 className="text-center text-3xl font-semibold mb-4">Affiliate Registration</h2>
 
                         {/* Stepper Component */}
@@ -164,8 +164,8 @@ const AffiliateRegister = () => {
                                             }`}>
                                             {currentStep > step ? "✓" : step}
                                         </div>
-                                        <span className="text-xs mt-1">
-                                            {step === 1 ? "Personal" : step === 2 ? "Address" : "Payment"}
+                                        <span className="text-xs mt-1 font-bold">
+                                            {step === 1 ? "Personal" : step === 2 ? "Address" : "Payout Bank Account"}
                                         </span>
                                     </div>
                                 ))}
